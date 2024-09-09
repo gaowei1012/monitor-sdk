@@ -1,11 +1,26 @@
 {
   "name": "monitor-sdk",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "monitor-sdk",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "rm -rf dist && tsc"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gaowei1012/monitor-sdk.git"
+  },
+  "keywords": [
+    "monitor-sdk"
+  ],
+  "bugs": {
+    "url": "https://github.com/gaowei1012/monitor-sdk/issues"
+  },
+  "homepage": "https://github.com/gaowei1012/monitor-sdk#readme",
   "author": "执念",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "typescript": "^5.5.4"
+  }
 }

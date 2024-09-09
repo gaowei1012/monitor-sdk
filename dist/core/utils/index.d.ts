@@ -1,0 +1,1 @@
+export { xhrReplase } from './utils';
