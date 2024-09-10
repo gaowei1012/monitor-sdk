@@ -21,6 +21,8 @@
   "author": "执念",
   "license": "ISC",
   "dependencies": {
-    "typescript": "^5.5.4"
+    "@tarojs/taro": "3.6.25",
+    "typescript": "^5.5.4",
+    "@tarojs/components": "3.6.25"
   }
 }
