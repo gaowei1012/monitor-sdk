@@ -4,7 +4,7 @@ module.exports = {
   semi: false,
   singleQuote: true,
   jsxSingleQuote: true,
-  printWidth: 200,
+  printWidth: 120,
   trailingComma: 'none',
   jsxBracketSameLine: true
 }

@@ -1,1 +1,1 @@
-export { xhrReplase } from './utils'
+export * from './utils'
