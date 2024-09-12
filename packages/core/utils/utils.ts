@@ -1,4 +1,4 @@
-import { httpMetrics, MPerformanceNavigationTiming, OriginInformation, PageInformation, PerformanceEntryHander, ResourceFlowTiming } from '../types'
+import { httpMetrics, mechanismType, MPerformanceNavigationTiming, OriginInformation, PageInformation, PerformanceEntryHander, ResourceFlowTiming } from '../types'
 
 // afterLoad function
 export const afterLoad = (callback: any) => {
@@ -231,4 +231,53 @@ export const proxyFetch = (sendHandler: Function | null | undefined, loadHandler
       })
     }
   }
+}
+
+// 判断JS异常、静态资源异常、还是跨域异常
+export const getErrorKey = (event: ErrorEvent | Event) => {
+  const isJsError = event instanceof ErrorEvent
+  if (!isJsError) return mechanismType.RS
+  return event.message === 'Script error.' ? mechanismType.CS : mechanismType.JS
+}
+
+// 对每一个错误详情，生成一串编码
+export const getErrorUid = (input: string) => {
+  return window.btoa(unescape(encodeURIComponent(input)))
+}
+
+// 正则表达式，用以解析堆栈split后得到的字符串
+const FULL_MATCH = /^\s*at (?:(.*?) ?\()?((?:file|https?|blob|chrome-extension|address|native|eval|webpack|<anonymous>|[-a-z]+:|.*bundle|\/).*?)(?::(\d+))?(?::(\d+))?\)?\s*$/i
+
+// 限制只追溯10个
+const STACKTRACE_LIMIT = 10
+
+// 解析每一行
+export function parseStatckLine(line: string) {
+  const lineMatch = line.match(FULL_MATCH)
+  if (!lineMatch) return {}
+  const filename = lineMatch[2]
+  const functionName = lineMatch[1] || ''
+  const lineno = parseInt(lineMatch[3], 10) || undefined
+  const colno = parseInt(lineMatch[4], 10) || undefined
+  return {
+    filename,
+    functionName,
+    lineno,
+    colno
+  }
+}
+
+// 解析错误堆栈
+export function parseStatckFrames(error: Error) {
+  const { stack } = error
+  // 无 statck 返回
+  if (!stack) return []
+  const frames = []
+  for (const line of stack.split('\n').slice(1)) {
+    const frame = parseStatckLine(line)
+    if (frame) {
+      frames.push(frame)
+    }
+  }
+  return frames.slice(0, STACKTRACE_LIMIT)
 }

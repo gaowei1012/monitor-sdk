@@ -66,7 +66,6 @@ export interface OriginInformation {
   type: number | string
 }
 
-
 export interface behaviorRecordsOptions {
   maxBehaviorRecords: number
 }
@@ -131,16 +130,17 @@ export enum mechanismType {
 
 // 格式化后的 异常数据结构体
 export interface ExceptionMetrics {
-  mechanism: Object;
-  value?: string;
-  type: string;
-  stackTrace?: Object;
-  pageInformation?: Object;
-  breadcrumbs?: Array<behaviorStack>;
-  errorUid: string;
-  meta?: any;
+  mechanism: Object
+  value?: string
+  type: string
+  stackTrace?: Object
+  pageInformation?: Object
+  breadcrumbs?: Array<behaviorStack>
+  errorUid: string
+  meta?: any
 }
 
 export interface ErrorVitalsInitOptions {
   Vue: any
+  React: any
 }
