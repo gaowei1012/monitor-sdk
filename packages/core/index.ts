@@ -1,1 +1,2 @@
-export { default as Core } from './core'
+export * from './vitals/webVitals'
+export * from './vitals/userVitals'
