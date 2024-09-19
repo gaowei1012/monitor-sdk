@@ -1,4 +1,4 @@
-import { ErrorVitalsInitOptions, ExceptionMetrics, mechanismType } from '../types'
+import { ErrorVitalsInitOptions, ExceptionMetrics, mechanismType, ResourceErrorTarget } from '../types'
 import { getErrorKey, getErrorUid, parseStatckFrames } from '../utils'
 
 export default class ErrorVitals {
@@ -82,7 +82,33 @@ export default class ErrorVitals {
 
   // 初始化 静态资源异常 的数据获取和上报
   initResourceError = (): void => {
-    //... 详情代码在下
+    const handler = (event: Event) => {
+      event.preventDefault()
+      if (getErrorKey(event) != mechanismType.RS) return
+      const target = event.target as ResourceErrorTarget
+      // 上报错误归类
+      const exception = {
+        mechanis: {
+          type: mechanismType.RS
+        },
+        // 错误信息
+        value: '',
+        // 错误类型
+        type: 'ResourceError',
+        // 用户行为追踪 breadcrumbs 在 errorSendHandler 中统一封装
+        // 页面基本信息 pageInformation 也在 errorSendHandler 中统一封装
+        // 错误的标识码
+        errirUid: getErrorUid(`${mechanismType.RS}-${target.src}-${target.tagName}`),
+        meta: {
+          url: target.src,
+          html: target.outerHTML,
+          type: target.tagName
+        },
+      } as unknown as ExceptionMetrics;
+      // 一般错误异常立刻上报，不用缓存在本地
+      this.errorSendHandler(exception)
+    }
+    window.addEventListener('error', (event) => handler(event), true)
   }
 
   // 初始化 Promise异常 的数据获取和上报

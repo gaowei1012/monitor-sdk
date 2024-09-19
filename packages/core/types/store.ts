@@ -144,3 +144,9 @@ export interface ErrorVitalsInitOptions {
   Vue: any
   React: any
 }
+
+export interface ResourceErrorTarget {
+  src?: string
+  tagName?: string
+  outerHTML?: string
+}
