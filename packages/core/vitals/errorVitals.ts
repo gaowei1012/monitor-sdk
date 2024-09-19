@@ -1,5 +1,5 @@
-import { ErrorVitalsInitOptions, ExceptionMetrics, httpMetrics, mechanismType, ResourceErrorTarget } from '../types'
-import { getErrorKey, getErrorUid, parseStatckFrames, proxyFetch, proxyXmlHttp } from '../utils'
+import { ErrorVitalsInitOptions, ExceptionMetrics, httpMetrics, mechanismType, React, ResourceErrorTarget, ViewModel, Vue } from '../types'
+import { getErrorKey, getErrorUid, parseStatckFrames, proxyFetch, proxyXmlHttp, formatComponentName } from '../utils'
 
 export default class ErrorVitals {
   private engineInstance: any
@@ -203,5 +203,37 @@ export default class ErrorVitals {
   // 初始化 Vue异常 的数据获取和上报
   initReactError = (app: React): void => {
     //... 详情代码在下
+  }
+
+  // 初始化 Vue异常 的数据获取和上报
+  initVueError = (app: Vue): void => {
+    app.config.errorHandler = (err: Error, vm: ViewModel, info: string):void => {
+      const componentName = formatComponentName(vm, false)
+      const exception = {
+        // 上报错误归类
+        mechanism: {
+          type: mechanismType.VUE
+        },
+        // 错误信息
+        value: err.message,
+        // 错误类型
+        type: err.name,
+        // 解析后的错误堆栈
+        statckTrace: {
+          frames: parseStatckFrames(err)
+        },
+        // 错误标识
+        errirUid: getErrorUid(`${mechanismType.HP}-${err.message}-${componentName}-${info}`),
+        // 附带信息
+        meta: {
+          // 报错的vue组件名称
+          componentName,
+          // 报错的Vue阶段
+          hook: info
+        }
+      } as unknown as ExceptionMetrics
+      // 自行上报异常，也可以跨域脚本的异常都不上报;
+      this.errorSendHandler(exception)
+    }
   }
 }
