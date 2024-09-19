@@ -1,4 +1,4 @@
-import MetricsStore from './store/store';
+import MetricsStore from '../store/store';
 export default class WebVitals {
     private engineInstance;
     metrics: MetricsStore;

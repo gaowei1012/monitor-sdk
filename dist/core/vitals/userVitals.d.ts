@@ -1,4 +1,4 @@
-import UserMetricsStore, { IMetrics } from './store/userStore';
+import UserMetricsStore, { IMetrics } from '../store/userStore';
 export default class UserVitals {
     private engineInstance;
     metrics: UserMetricsStore;

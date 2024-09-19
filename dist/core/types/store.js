@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.metricsName = void 0;
+exports.mechanismType = exports.metricsName = void 0;
 var metricsName;
 (function (metricsName) {
     metricsName["FP"] = "first-panit";
@@ -17,3 +17,14 @@ var metricsName;
     metricsName["CDR"] = "custom-define-record";
     metricsName["HT"] = "http-record";
 })(metricsName || (exports.metricsName = metricsName = {}));
+// 错误类型枚举
+var mechanismType;
+(function (mechanismType) {
+    mechanismType["JS"] = "js";
+    mechanismType["RS"] = "resource";
+    mechanismType["UJ"] = "unhandledrejection";
+    mechanismType["HP"] = "http";
+    mechanismType["CS"] = "cors";
+    mechanismType["VUE"] = "vue";
+    mechanismType["REACT"] = "react";
+})(mechanismType || (exports.mechanismType = mechanismType = {}));

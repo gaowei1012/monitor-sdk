@@ -3,9 +3,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var store_1 = __importDefault(require("./store/store"));
-var types_1 = require("./types");
-var utils_1 = require("./utils");
+var store_1 = __importDefault(require("../store/store"));
+var types_1 = require("../types");
+var utils_1 = require("../utils");
 var WebVitals = /** @class */ (function () {
     function WebVitals(engineInstance) {
         var _this = this;

@@ -1,6 +1,6 @@
-import MetricsStore, { IMetrics } from './store/store'
-import { LayoutShift, ResourceFlowTiming, metricsName } from './types'
-import { afterLoad, getFID, getCLS, getFCP, getFP, getLCP, getNavigationTiming, getResourceFlow } from './utils'
+import MetricsStore, { IMetrics } from '../store/store'
+import { LayoutShift, ResourceFlowTiming, metricsName } from '../types'
+import { afterLoad, getFID, getCLS, getFCP, getFP, getLCP, getNavigationTiming, getResourceFlow } from '../utils'
 
 export default class WebVitals {
   private engineInstance: any

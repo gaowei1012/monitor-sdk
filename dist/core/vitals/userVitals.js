@@ -14,10 +14,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var userStore_1 = __importDefault(require("./store/userStore"));
-var index_1 = require("./types/index");
-var utils_1 = require("./utils");
-var behaviorStore_1 = __importDefault(require("./store/behaviorStore"));
+var userStore_1 = __importDefault(require("../store/userStore"));
+var index_1 = require("../types/index");
+var utils_1 = require("../utils");
+var behaviorStore_1 = __importDefault(require("../store/behaviorStore"));
 var UserVitals = /** @class */ (function () {
     function UserVitals(engineInstance) {
         var _this = this;
@@ -92,7 +92,9 @@ var UserVitals = /** @class */ (function () {
         };
         // 初始化 OI 用户来路的获取以及返回
         this.initOriginInfo = function () {
-            //... 详情代码在下文
+            var info = (0, utils_1.getOriginInfo)();
+            var metrics = info;
+            _this.metrics.set(index_1.metricsName.OI, metrics);
         };
         // 初始化 CBR 点击事件的获取和返回
         this.initClickHandler = function (mountList) {
@@ -125,7 +127,19 @@ var UserVitals = /** @class */ (function () {
         };
         // 初始化 http 请求的数据获取和上报
         this.initHttpHandler = function () {
-            //... 详情代码在下文
+            var loadHandler = function (metrice) {
+                // 对于正常请求的 HTTP 请求来说,不需要记录 请求体 和 响应体
+                if (metrice.status < 400) {
+                    delete metrice.response;
+                    delete metrice.body;
+                }
+                // 记录到 UserMetricsStore
+                _this.metrics.add(index_1.metricsName.HT, metrice);
+                // 记录到用户行为记录栈
+                _this.breadcrumbs.push(__assign({ category: index_1.metricsName.HT, data: metrice }, _this.getExtends()));
+            };
+            (0, utils_1.proxyXmlHttp)(null, loadHandler);
+            (0, utils_1.proxyFetch)(null, loadHandler);
         };
         this.engineInstance = engineInstance;
         this.metrics = new userStore_1.default();

@@ -1,2 +1,2 @@
-export * from './webVitals';
-export * from './userVitals';
+export * from './vitals/webVitals';
+export * from './vitals/userVitals';

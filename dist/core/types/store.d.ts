@@ -82,3 +82,70 @@ export interface CustomAnalyticsData {
     eventLabel: string;
     eventValue?: string;
 }
+export interface httpMetrics {
+    method: string;
+    url: string | URL;
+    body: Document | XMLHttpRequestBodyInit | null | undefined | ReadableStream;
+    requestTime: number;
+    responseTime: number;
+    status: number;
+    statusText: string;
+    response?: any;
+}
+export declare enum mechanismType {
+    JS = "js",
+    RS = "resource",
+    UJ = "unhandledrejection",
+    HP = "http",
+    CS = "cors",
+    VUE = "vue",
+    REACT = "react"
+}
+export interface ExceptionMetrics {
+    mechanism: Object;
+    value?: string;
+    type: string;
+    stackTrace?: Object;
+    pageInformation?: Object;
+    breadcrumbs?: Array<behaviorStack>;
+    errorUid: string;
+    meta?: any;
+}
+export interface ErrorVitalsInitOptions {
+    Vue: any;
+    React: any;
+}
+export interface ResourceErrorTarget {
+    src?: string;
+    tagName?: string;
+    outerHTML?: string;
+}
+export interface Vue {
+    config: {
+        errorHandler?: any;
+        warnHandler?: any;
+    };
+}
+export interface ViewModel {
+    _isVue?: boolean;
+    __isVue?: boolean;
+    $root?: ViewModel;
+    $parent?: ViewModel;
+    $props?: {
+        [key: string]: any;
+    };
+    $options: {
+        name?: string;
+        propsData?: {
+            [key: string]: any;
+        };
+        _componentTag?: string;
+        __file?: string;
+    };
+}
+export interface React {
+    config: {
+        errorHandler?: any;
+        warnHandler?: any;
+    };
+}
