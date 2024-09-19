@@ -17,7 +17,7 @@ TODO: 开发任务
   - 页面性能、资源加载
 
 2. 平台功能
-  - Native 
-  - Taro
-  - Web
+  - Native [待开发]
+  - Taro [待开发]
+  - Web [进行中]
 
