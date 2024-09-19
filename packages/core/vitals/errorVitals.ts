@@ -1,5 +1,5 @@
-import { ErrorVitalsInitOptions, ExceptionMetrics, mechanismType, ResourceErrorTarget } from '../types'
-import { getErrorKey, getErrorUid, parseStatckFrames } from '../utils'
+import { ErrorVitalsInitOptions, ExceptionMetrics, httpMetrics, mechanismType, ResourceErrorTarget } from '../types'
+import { getErrorKey, getErrorUid, parseStatckFrames, proxyFetch, proxyXmlHttp } from '../utils'
 
 export default class ErrorVitals {
   private engineInstance: any
@@ -146,7 +146,31 @@ export default class ErrorVitals {
 
   // 初始化 HTTP请求异常 的数据获取和上报
   initHttpError = (): void => {
-    //... 详情代码在下
+    const loadHandler = (metrics: httpMetrics) => {
+      if (metrics.status < 400) return
+      const value = metrics.response
+      const exception = {
+        mechanis: {
+          type: mechanismType.HP
+        },
+        // 错误信息
+        value,
+        // 错误类型
+        type: 'HttpError',
+        // 用户行为追踪 breadcrumbs 在 errorSendHandler 中统一封装
+        // 页面基本信息 pageInformation 也在 errorSendHandler 中统一封装
+        // 错误的标识码
+        errirUid: getErrorUid(`${mechanismType.HP}-${value}-${metrics.statusText}`),
+        // 附带信息
+        meta: {
+          metrics
+        },
+      } as unknown as ExceptionMetrics
+      // 一般错误异常立刻上报，不用缓存在本地
+      this.errorSendHandler(exception)
+    }
+    proxyXmlHttp(null, loadHandler)
+    proxyFetch(null, loadHandler)
   }
 
   // 初始化 跨域异常 的数据获取和上报
