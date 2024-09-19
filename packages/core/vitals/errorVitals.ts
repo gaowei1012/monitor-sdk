@@ -83,6 +83,7 @@ export default class ErrorVitals {
   // 初始化 静态资源异常 的数据获取和上报
   initResourceError = (): void => {
     const handler = (event: Event) => {
+      // 阻止事件向上冒泡
       event.preventDefault()
       if (getErrorKey(event) != mechanismType.RS) return
       const target = event.target as ResourceErrorTarget
@@ -113,7 +114,34 @@ export default class ErrorVitals {
 
   // 初始化 Promise异常 的数据获取和上报
   initPromiseError = (): void => {
-    //... 详情代码在下
+    const handler = (event: PromiseRejectionEvent) => {
+      // 阻止事件向上冒泡
+      event.preventDefault()
+      const value = event.reason.message || event.reason
+      const type = event.reason.name || 'UnKnowun'
+      const exception = {
+        mechanis: {
+          type: mechanismType.UJ
+        },
+        // 错误信息
+        value,
+        // 错误类型
+        type,
+        // 解析后的错误堆栈
+        statckTrace: {
+          frames: parseStatckFrames(event.reason)
+        },
+        // 用户行为追踪 breadcrumbs 在 errorSendHandler 中统一封装
+        // 页面基本信息 pageInformation 也在 errorSendHandler 中统一封装
+        // 错误的标识码
+        errirUid: getErrorUid(`${mechanismType.UJ}-${value}-${type}`),
+        // 附带信息
+        meta: {},
+      } as unknown as ExceptionMetrics
+       // 一般错误异常立刻上报，不用缓存在本地
+      this.errorSendHandler(exception)
+    }
+    window.addEventListener('unhandledrejection', (event) => handler(event), true)
   }
 
   // 初始化 HTTP请求异常 的数据获取和上报
