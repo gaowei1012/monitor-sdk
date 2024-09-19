@@ -175,7 +175,29 @@ export default class ErrorVitals {
 
   // 初始化 跨域异常 的数据获取和上报
   initCorsError = (): void => {
-    //... 详情代码在下
+    const handler = (event: ErrorEvent) => {
+      // 阻止事件向上冒泡
+      event.preventDefault()
+      if (getErrorKey(event) !== mechanismType.CS) return
+      const exception = {
+        mechanis: {
+          type: mechanismType.HP
+        },
+        // 错误信息
+        value: event.message,
+        // 错误类型
+        type: 'HttpError',
+        // 用户行为追踪 breadcrumbs 在 errorSendHandler 中统一封装
+        // 页面基本信息 pageInformation 也在 errorSendHandler 中统一封装
+        // 错误的标识码
+        errirUid: getErrorUid(`${mechanismType.HP}-${event.message}`),
+        // 附带信息
+        meta: {},
+      } as unknown as ExceptionMetrics
+      // 自行上报异常，也可以跨域脚本的异常都不上报;
+      this.errorSendHandler(exception)
+    }
+    window.addEventListener('error', (event) => handler(event), true)
   }
 
   // 初始化 Vue异常 的数据获取和上报
