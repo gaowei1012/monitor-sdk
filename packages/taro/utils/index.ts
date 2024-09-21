@@ -1,1 +1,1 @@
-export { getPath, sendPv, getSysInfo } from './utils'
+export { getPath, sendPv, getSysInfo, sendError } from './utils'

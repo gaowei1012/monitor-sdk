@@ -16,6 +16,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getSysInfo = exports.getPath = void 0;
 exports.sendPv = sendPv;
+exports.sendError = sendError;
 var taro_1 = __importDefault(require("@tarojs/taro"));
 var crypto_js_1 = __importDefault(require("crypto-js"));
 var request_1 = require("../services/request");
@@ -28,6 +29,16 @@ function sendPv(args, options) {
     console.log('埋点：args', args, options);
     // 发送埋点数据
     (0, request_1.doRequest)("msg/upload", { msg: args })
+        .then(function (res) {
+        console.log('发送成功');
+    })
+        .catch(function (err) {
+        console.log('发送失败', err);
+    });
+}
+function sendError(args, options) {
+    console.log('错误统计：', args, options);
+    (0, request_1.doRequest)("error/upload", { msg: args })
         .then(function (res) {
         console.log('发送成功');
     })

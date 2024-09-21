@@ -19,6 +19,17 @@ export function sendPv(args: string, options?: string) {
     })
 }
 
+export function sendError(args: string, options?: any) {
+  console.log('错误统计：', args, options)
+  doRequest(`error/upload`, { msg: args })
+    .then((res) => {
+      console.log('发送成功')
+    })
+    .catch((err) => {
+      console.log('发送失败', err)
+    })
+}
+
 export const getSysInfo = (options?: any) => {
   const sysInfo = Taro.getSystemInfoSync() as unknown as any
   // 使用uuid作为用户唯一标识

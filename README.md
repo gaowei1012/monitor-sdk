@@ -11,9 +11,9 @@ TODO: 开发任务
 
 1. 功能
 
-  - 页面PV、自定义上报
+  - 页面PV、自定义上报 (已实现taro)
   - 用户行为捕捉
-  - 接口请求、页面报错
+  - 接口请求、页面报错 (已实现taro)
   - 页面性能、资源加载
 
 2. 平台功能
@@ -21,3 +21,30 @@ TODO: 开发任务
   - Taro [待开发]
   - Web [进行中]
 
+
+## Taro 使用说明
+
+- usePv() 统计 Pv
+
+```ts
+// 统计访问量
+usePv()
+```
+
+- createErrorBoundary 错误收集
+
+```tsx
+const App = () => {
+  useEffeft(() => {
+    try {
+      // 正常逻辑
+    } catch(err) {
+      // 错误向上抛出
+      thorw err
+    }
+  }, [])
+  return <View>收集错误</View>
+}
+
+export default createErrorBoundary(App)
+```

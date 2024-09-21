@@ -1,2 +1,2 @@
-export declare const LogContext: any;
-export declare const useLog: () => any[];
+export declare const LogContext: import("react").Context<{}>;
+export declare const useLog: () => (import("react").MutableRefObject<any> | ((data: any, type: any) => void))[];
