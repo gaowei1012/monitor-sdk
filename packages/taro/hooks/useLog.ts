@@ -8,7 +8,7 @@ export const useLog = () => {
 
   // 分清依赖关系
   const reportMessage = useCallback(
-    function (data, type) {
+    function (data: any, type: string) {
       if (type == 'pv') {
         console.log('组件 pv 上报', message)
       } else if (type == 'click') {
@@ -19,7 +19,7 @@ export const useLog = () => {
   )
 
   useEffect(() => {
-    const handleClick = function (e) {
+    const handleClick = function (e: { target: any }) {
       reportMessage(e.target, 'click')
     }
     if (listenDOM.current) {
