@@ -42,13 +42,12 @@ function createErrorBoundary(Page) {
                 errorInfo: errorInfo['componentStack'] ? errorInfo['componentStack'] : ''
             });
             (0, utils_1.sendError)(sysInfo);
-            // 捕获错误
-            // console.log('componentDidCatch', error, error.message)
         };
         // render() {
         //   return this.state.hasError ? <>Something went wrong.</> : <Page />
         // }
         // 对页面的错误使用 componentDidCatch 捕获，上报
+        // 拦截错误页面
         ErrorBoundary.prototype.render = function () {
             return (0, jsx_runtime_1.jsx)(Page, {});
         };
