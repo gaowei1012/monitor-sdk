@@ -28,6 +28,7 @@ function createErrorBoundary(Page) {
     //   return this.state.hasError ? <>Something went wrong.</> : <Page />
     // }
     // 对页面的错误使用 componentDidCatch 捕获，上报
+    // 拦截错误页面
     render(): ReactNode {
       return <Page />
     }
