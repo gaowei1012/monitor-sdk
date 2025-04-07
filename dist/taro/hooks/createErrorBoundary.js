@@ -42,8 +42,6 @@ function createErrorBoundary(Page) {
                 errorInfo: errorInfo['componentStack'] ? errorInfo['componentStack'] : ''
             });
             (0, utils_1.sendError)(sysInfo);
-            // 捕获错误
-            // console.log('componentDidCatch', error, error.message)
         };
         // render() {
         //   return this.state.hasError ? <>Something went wrong.</> : <Page />
