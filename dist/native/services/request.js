@@ -3,19 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.doRequest = doRequest;
-var taro_1 = require("@tarojs/taro");
+exports.request = void 0;
+var axios_1 = __importDefault(require("axios"));
 var config_1 = __importDefault(require("../../common/config"));
-function doRequest(url, data) {
-    console.log('doRequest', data);
+var request = function (option, __callback) {
+    var url = option.url, data = option.data, method = option.method;
     return new Promise(function (resolve, reject) {
-        (0, taro_1.request)({
-            header: {
-                'content-type': 'application/json'
-            },
-            method: 'POST',
+        (0, axios_1.default)({
+            method: method,
             url: config_1.default.baseUrl + url,
-            data: typeof data == 'object' ? JSON.stringify(data) : ''
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
             .then(function (response) {
             resolve(response.data);
@@ -24,4 +23,5 @@ function doRequest(url, data) {
             reject(err);
         });
     });
-}
+};
+exports.request = request;

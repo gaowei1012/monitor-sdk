@@ -1,5 +1,5 @@
 import { Component, ReactNode } from 'react'
-import { getPath, getSysInfo, sendError } from '../utils'
+import { getSysInfo, sendError } from '../utils'
 
 function createErrorBoundary(Page) {
   return class ErrorBoundary extends Component {
@@ -15,9 +15,7 @@ function createErrorBoundary(Page) {
 
     // 收集错误
     async componentDidCatch(error, errorInfo) {
-      const currentPath = getPath()
       const sysInfo = await getSysInfo({
-        path: currentPath,
         errorMsg: error.message,
         errorInfo: errorInfo['componentStack'] ? errorInfo['componentStack'] : ''
       })
