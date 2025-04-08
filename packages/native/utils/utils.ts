@@ -74,3 +74,5 @@ export const getSysInfo = async (options?: any) => {
   }
   return JSON.stringify({ start_time: new Date().getTime(), h: { ...h, device_info }, options })
 }
+
+

@@ -17,7 +17,10 @@ function createErrorBoundary(Page) {
     async componentDidCatch(error, errorInfo) {
       const sysInfo = await getSysInfo({
         errorMsg: error.message,
-        errorInfo: errorInfo['componentStack'] ? errorInfo['componentStack'] : ''
+        // errorInfo: errorInfo['componentStack'] ? errorInfo['componentStack'] : ''
+        errorInfo: errorInfo.componentStack
+          ? errorInfo.componentStack
+          : ''
       })
       sendError(sysInfo)
     }

@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendError = exports.getSysInfo = exports.sendPv = void 0;
+exports.setNativeErrorHandler = exports.setErrorHandler = exports.sendError = exports.getSysInfo = exports.sendPv = void 0;
 var utils_1 = require("./utils");
 Object.defineProperty(exports, "sendPv", { enumerable: true, get: function () { return utils_1.sendPv; } });
 Object.defineProperty(exports, "getSysInfo", { enumerable: true, get: function () { return utils_1.getSysInfo; } });
 Object.defineProperty(exports, "sendError", { enumerable: true, get: function () { return utils_1.sendError; } });
+var setJSExceptionHandler_1 = require("./setJSExceptionHandler");
+Object.defineProperty(exports, "setErrorHandler", { enumerable: true, get: function () { return setJSExceptionHandler_1.setErrorHandler; } });
+Object.defineProperty(exports, "setNativeErrorHandler", { enumerable: true, get: function () { return setJSExceptionHandler_1.setNativeErrorHandler; } });

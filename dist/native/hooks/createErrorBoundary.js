@@ -77,7 +77,10 @@ function createErrorBoundary(Page) {
                     switch (_a.label) {
                         case 0: return [4 /*yield*/, (0, utils_1.getSysInfo)({
                                 errorMsg: error.message,
-                                errorInfo: errorInfo['componentStack'] ? errorInfo['componentStack'] : ''
+                                // errorInfo: errorInfo['componentStack'] ? errorInfo['componentStack'] : ''
+                                errorInfo: errorInfo.componentStack
+                                    ? errorInfo.componentStack
+                                    : ''
                             })];
                         case 1:
                             sysInfo = _a.sent();

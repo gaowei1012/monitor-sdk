@@ -48,3 +48,7 @@ const App = () => {
 
 export default createErrorBoundary(App)
 ```
+
+## ReactNative 使用说明
+
+> 待补充

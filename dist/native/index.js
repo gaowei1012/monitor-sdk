@@ -1,8 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.LogContext = exports.usePv = exports.useLog = exports.createErrorBoundary = void 0;
+exports.setPromiseCatchHandler = exports.withErrorBoundary = exports.ErrorBoundary = exports.setErrorHandler = exports.getGlobalErrorHandler = exports.LogContext = exports.usePv = exports.useLog = exports.createErrorBoundary = void 0;
 var index_1 = require("./hooks/index");
 Object.defineProperty(exports, "createErrorBoundary", { enumerable: true, get: function () { return index_1.createErrorBoundary; } });
 Object.defineProperty(exports, "useLog", { enumerable: true, get: function () { return index_1.useLog; } });
 Object.defineProperty(exports, "usePv", { enumerable: true, get: function () { return index_1.usePv; } });
 Object.defineProperty(exports, "LogContext", { enumerable: true, get: function () { return index_1.LogContext; } });
+var globalError_1 = require("./globalError");
+Object.defineProperty(exports, "getGlobalErrorHandler", { enumerable: true, get: function () { return globalError_1.getGlobalErrorHandler; } });
+Object.defineProperty(exports, "setErrorHandler", { enumerable: true, get: function () { return globalError_1.setErrorHandler; } });
+var ErrorBoundary_1 = require("./errorBoundary/ErrorBoundary");
+Object.defineProperty(exports, "ErrorBoundary", { enumerable: true, get: function () { return ErrorBoundary_1.ErrorBoundary; } });
+var withErrorBoundary_1 = require("./errorBoundary/withErrorBoundary");
+Object.defineProperty(exports, "withErrorBoundary", { enumerable: true, get: function () { return withErrorBoundary_1.withErrorBoundary; } });
+var promiseTracker_1 = require("./promiseTracker");
+Object.defineProperty(exports, "setPromiseCatchHandler", { enumerable: true, get: function () { return promiseTracker_1.setPromiseCatchHandler; } });
