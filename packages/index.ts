@@ -1,3 +1,3 @@
 export * from './native'
-export * from './taro'
+export { useLog, usePv, createErrorBoundary, LogContext } from './taro'
 export * from './web'
