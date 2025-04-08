@@ -51,4 +51,61 @@ export default createErrorBoundary(App)
 
 ## ReactNative 使用说明
 
-> 待补充
+#### setGlobalErrorHandler
+
+```tsx
+import { setGlobalErrorHandler } from 'monitor-sdk/dist/native'
+setGlobalErrorHandler((error, isFatal) => {
+  console.lof('global error: ', error, isFatal)
+}, true)
+```
+
+#### setPromiseUnCatchHandler
+
+```tsx
+import { setPromiseUnCatchHandler } from 'monitor-sdk/dist/native'
+setPromiseUnCatchHandler((id, error) => {
+  console.log('promise un catch: ', id, error)
+})
+```
+
+#### ErrorBoundary
+
+```tsx
+import { ErrorBoundary } from 'monitor-sdk/dist/native'
+const App = () => {
+  return <ErrorBoundary>
+    <BugComponent />
+  </ErrorBoundary>
+}
+```
+
+#### withErrorBoundary
+
+```tsx
+import { withErrorBoundary } from 'monitor-sdk/dist/native';
+
+const BugCenter = props => {
+  const [isError, setIsError] = useState();
+  if (isError) {
+    throw new Error('💥');
+  } else {
+    return (
+      <Text
+        onPress={() => {
+          this.setState({
+            isError: true
+          });
+        }}>
+        {String(isError)}
+      </Text>
+    )
+  }
+}
+
+const SafeCenter = withErrorBoundary({
+  renderBoundary: ({error}) => {
+    return <Text>catch error: {error.message}</Text>;
+  },
+})(BugCenter);
+```
