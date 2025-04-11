@@ -10,7 +10,6 @@ export const setPromiseCatchHandler = (customHandler: PromoiseCatchHandler = noo
     console.log('Not setting the promise catch handler .. please fix setPromiseCatchHandler call')
     // 埋点数据统计
     return
-    
   }
 
   const allowed = allowedInDevMode ? true : false
